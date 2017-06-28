@@ -39,7 +39,7 @@ namespace WindowsFormsApp1
                 wait(900);
                 i++;
             }
-            while( i < 3);
+            while(i < 3);
         }
         void wait(int x)
         {
