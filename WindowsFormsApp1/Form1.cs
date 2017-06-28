@@ -29,7 +29,6 @@ namespace WindowsFormsApp1
         public void make ()
         {
             
-            Console.WriteLine("test");
             Gecko.GeckoElement btn = (Gecko.GeckoElement)geckoWebBrowser1.DomDocument.GetElementsByClassName("nupuke420")[0];
             Gecko.GeckoHtmlElement button = (Gecko.GeckoHtmlElement)btn;
             button.Click();
@@ -63,6 +62,8 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
+                    Console.WriteLine("captcha detected");
+                    checkBox1.Checked = false;
                     return false;
                 }
             }
@@ -76,7 +77,7 @@ namespace WindowsFormsApp1
                 await PutTaskDelay();
 
             }
-            while (checkBox1.Checked);
+            while (checkBox1.Checked && captchaCheck());
         }
     }
 }
