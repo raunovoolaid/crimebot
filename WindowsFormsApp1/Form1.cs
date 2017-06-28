@@ -15,7 +15,9 @@ namespace WindowsFormsApp1
         
         async Task PutTaskDelay()
         {
-            await Task.Delay(600);
+            Random rnd = new Random();
+            int delay = rnd.Next(204, 230);
+            await Task.Delay(delay);
         }
 
         public Form1()
