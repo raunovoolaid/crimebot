@@ -64,6 +64,7 @@ namespace WindowsFormsApp1
                 {
                     Console.WriteLine("captcha detected");
                     checkBox1.Checked = false;
+                    System.Media.SystemSounds.Asterisk.Play();
                     return false;
                 }
             }
