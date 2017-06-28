@@ -16,6 +16,7 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             geckoWebBrowser1.Navigate("http://www.crime.ee");
+            //test
 
         }
         public void make ()
