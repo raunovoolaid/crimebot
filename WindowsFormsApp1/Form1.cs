@@ -19,7 +19,7 @@ namespace WindowsFormsApp1
             geckoWebBrowser1.Navigate("http://www.crime.ee");
         }
         public void make ()
-        {
+        { 
             Gecko.GeckoHtmlElement Btn = (Gecko.GeckoHtmlElement)geckoWebBrowser1.DomDocument.GetElementById("nupuke420_aerator");
             Btn.Click();
         }
