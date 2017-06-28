@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Geckofx45</id>
+    <version>45.0.31</version>
+    <title>geckofx-45 Windows 32bit</title>
+    <authors>geckofx</authors>
+    <owners>geckofx</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://bitbucket.org/geckofx/</projectUrl>
+    <iconUrl>https://bitbucket.org/account/geckofx/avatar/256/?ts=1475265187</iconUrl>
+    <description>library that allows embeding gecko in C# applications.
+	
+	Example Usage:
+	
+		[STAThread]
+        static void Main(string[] args)
+        {
+            Xpcom.Initialize("Firefox");
+            var geckoWebBrowser = new GeckoWebBrowser {Dock = DockStyle.Fill};
+            Form f = new Form();
+            f.Controls.Add(geckoWebBrowser);
+            geckoWebBrowser.Navigate("www.google.com");
+            Application.Run(f);
+        }</description>
+    <summary>library that allows embeding gecko in C# applications.</summary>
+    <copyright>Copyright 2015</copyright>
+    <tags>Firefox Gecko Geckofx</tags>
+    <references>
+      <reference file="Geckofx-Core.dll" />
+      <reference file="Geckofx-Winforms.dll" />
+    </references>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Windows.Forms" targetFramework=".NETFramework4.5" />
+      <frameworkAssembly assemblyName="System.Drawing" targetFramework=".NETFramework4.5" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
