@@ -43,16 +43,6 @@ namespace WindowsFormsApp1
                  System.Media.SystemSounds.Asterisk.Play();
             
         }
-        void wait(int x)
-        {
-            DateTime t = DateTime.Now;
-            DateTime tf = DateTime.Now.AddMilliseconds(x);
-
-            while (t < tf)
-            {
-                t = DateTime.Now;
-            }
-        }
 
         public bool captchaCheck()
         {
@@ -78,12 +68,13 @@ namespace WindowsFormsApp1
 
         private async void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            for (var i = 0; i < 3; i++)
+            do
             {
                 make();
                 await PutTaskDelay();
-                
+
             }
+            while (checkBox1.Checked);
         }
     }
 }
