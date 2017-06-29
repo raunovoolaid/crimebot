@@ -79,7 +79,11 @@ namespace WindowsFormsApp1
             }
             while (captchaCheck() && Globals.kasClickida == 1);
         }
-
+        private void geckoWebBrowser1_DocumentCompleted(object sender, EventArgs e)
+        {
+            // Here you can add the coding to perform after document loaded
+            Console.WriteLine("finishedloading");
+        }
         public bool captchaCheck()
         {
             Gecko.GeckoHtmlElement captcha = (Gecko.GeckoHtmlElement)geckoWebBrowser1.DomDocument.GetElementById("captcha_container");
