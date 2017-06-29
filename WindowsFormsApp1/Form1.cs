@@ -8,11 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Gmail.v1;
-using Google.Apis.Gmail.v1.Data;
-using Google.Apis.Services;
-using Google.Apis.Util.Store;
 using System.Threading;
 using System.Diagnostics;
 
@@ -85,10 +80,14 @@ namespace WindowsFormsApp1
             }
             while (captchaCheck() && Globals.kasClickida == 1);
         }
-        private void geckoWebBrowser1_DocumentCompleted(object sender, EventArgs e)
+        private void buyMaterials(string Material)
         {
-            // Here you can add the coding to perform after document loaded
-            Console.WriteLine("finishedloading");
+            if (geckoWebBrowser1.Url.ToString().Contains("?asukoht=slumm&paik=4&lett=2"))
+            {
+                Gecko.GeckoHtmlElement plats = (Gecko.GeckoHtmlElement)geckoWebBrowser1.Document.GetElementsByName("purchcrafitem")[0];
+            }
+            
+            
         }
         public bool captchaCheck()
         {
