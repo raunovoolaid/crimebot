@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
-
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
@@ -39,161 +38,235 @@ namespace WindowsFormsApp1
             public static int rekordKlikke = 0;
             public static int kasClickida = 0;
             public static string rekordAeg = "0";
+            public static int ostetud = 0;
+            public static int klikkideCount = 0;
+            public static string otsas = "";
         }
 
-        public void make()
+        public async void make(bool jarjest)
         {
-            label11.Text = watch.Elapsed.TotalSeconds.ToString() + "s";
-            if (double.Parse(watch.Elapsed.TotalSeconds.ToString()) > double.Parse(Globals.rekordAeg))
-            {
-                Globals.rekordAeg = watch.Elapsed.TotalSeconds.ToString();
-                label13.Text = Globals.rekordAeg + "s";
-            }
-            Gecko.GeckoElement btn = (Gecko.GeckoElement)geckoWebBrowser1.DomDocument.GetElementsByClassName("nupuke420")[0];
-            Gecko.GeckoHtmlElement button = (Gecko.GeckoHtmlElement)btn;
-            button.Click();
-            return;
-        }
-        private async void button1_Click(object sender, EventArgs e)
-        {
-
-
-            label9.Text = "Edukaid klikke järjest: 0";
-            //Stopwatch stopper = new Stopwatch();
-            watch.Reset();
-            watch.Start();
-            Globals.kasClickida = 1;
-            int counter = 0;
-            do
-            {
-                make();
-                counter++;
-                if (Globals.rekordKlikke < counter)
+            do {
+                if (jarjest== false)
                 {
-                    Globals.rekordKlikke = counter;
-                    label10.Text = "Rekord: " + counter;
+                    label9.Text = "Edukaid klikke järjest: 0";
+                    Globals.klikkideCount = 0;
                 }
-                label9.Text = "Edukaid klikke järjest: " + counter;
-                await PutTaskDelay();
-                getStats();
-
-            }
-            while (captchaCheck() && Globals.kasClickida == 1);
-        }
-        private void buyMaterials(string Material)
-        {
-            if (geckoWebBrowser1.Url.ToString().Contains("?asukoht=slumm&paik=4&lett=2"))
-            {
-                Gecko.GeckoHtmlElement plats = (Gecko.GeckoHtmlElement)geckoWebBrowser1.Document.GetElementsByName("purchcrafitem")[0];
-            }
-            
-            
-        }
-        public bool captchaCheck()
-        {
-            Gecko.GeckoHtmlElement captcha = (Gecko.GeckoHtmlElement)geckoWebBrowser1.DomDocument.GetElementById("captcha_container");
-            Gecko.GeckoNodeCollection veaSisud = (Gecko.GeckoNodeCollection)geckoWebBrowser1.DomDocument.GetElementsByClassName("message info");
-            int veaCount = 0;
-            Gecko.GeckoHtmlElement vigaSisu = null;
-            foreach (Gecko.GeckoNode veaSisu in veaSisud)
-            {
-                veaCount++;
-                if (veaCount > 1)
+                do
                 {
-                    vigaSisu = (Gecko.GeckoHtmlElement)geckoWebBrowser1.DomDocument.GetElementsByClassName("message info")[1];
-                    break;
-                }
-            }
-
-            if (captcha == null)
-            {
-
-                if (vigaSisu == null)
-                {
-                    Console.WriteLine("caphcha not found and viga is null");
-                    return true;
-                }
-                else
-                {
-                    if (vigaSisu.InnerHtml.Contains("tellida"))
+                    Gecko.GeckoHtmlElement captcha = (Gecko.GeckoHtmlElement)geckoWebBrowser1.DomDocument.GetElementById("captcha_container");
+                    Gecko.GeckoNodeCollection veaSisud = (Gecko.GeckoNodeCollection)geckoWebBrowser1.DomDocument.GetElementsByClassName("message info");
+                    int veaCount = 0;
+                    Gecko.GeckoHtmlElement vigaInfo = null;
+                    Gecko.GeckoHtmlElement vigaError = null;
+                    foreach (Gecko.GeckoNode veaSisu in veaSisud)
                     {
-                        Console.WriteLine("tellida aineid");
-                        Globals.kasClickida = 0;
-                        System.Media.SystemSounds.Asterisk.Play();
-                        watch.Stop();
-                        return false;
-                    }
-                    else
-                    {
-                        if (vigaSisu.InnerHtml.Contains("valmistada"))
+                        veaCount++;
+                        if (veaCount > 1)
                         {
-                            Console.WriteLine("valmistada mahla");
-                            Globals.kasClickida = 0;
-                            System.Media.SystemSounds.Asterisk.Play();
-                            watch.Stop();
-                            return false;
+                            vigaError = (Gecko.GeckoHtmlElement)geckoWebBrowser1.DomDocument.GetElementsByClassName("message error")[0];
+                            vigaInfo = (Gecko.GeckoHtmlElement)geckoWebBrowser1.DomDocument.GetElementsByClassName("message info")[1];
+                            break;
+                        }
+                    }
+
+                    if (captcha == null)
+                    {
+
+                        if (vigaInfo == null)
+                        {
+                            Console.WriteLine("caphcha not found and viga is null");
+                            continue;
                         }
                         else
                         {
-                            Console.WriteLine("caphcha hidden and viga is OK");
-                            return true;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (captcha.GetAttribute("style").Contains("display: none"))
-                {
-                    if (vigaSisu == null)
-                    {
-                        Console.WriteLine("caphcha hidden and viga is null");
-                        return true;
-                    }
-                    else
-                    {
-                        if (vigaSisu.InnerHtml.Contains("tellida"))
-                        {
-                            Console.WriteLine("caphcha hidden and tellida aineid");
-                            Globals.kasClickida = 0;
-                            System.Media.SystemSounds.Asterisk.Play();
-                            watch.Stop();
-                            return false;
-                        }
-                        else
-                        {
-                            if (vigaSisu.InnerHtml.Contains("valmistada"))
+                            if (vigaError.InnerHtml.Contains("otsas"))
                             {
-                                Console.WriteLine("caphcha hidden and valmistada mahla");
+                                Console.WriteLine(vigaError.InnerHtml.Substring(47, (vigaError.InnerHtml.Length - 63)));
                                 Globals.kasClickida = 0;
                                 System.Media.SystemSounds.Asterisk.Play();
                                 watch.Stop();
-                                return false;
+                                Globals.otsas = vigaError.InnerHtml.Substring(47, (vigaError.InnerHtml.Length - 63));
+                                break;
                             }
                             else
                             {
                                 Console.WriteLine("caphcha hidden and viga is OK");
-                                return true;
+                                break;
                             }
                         }
                     }
+                    else
+                    {
+                        if (captcha.GetAttribute("style").Contains("display: none"))
+                        {
+                            if (vigaInfo == null)
+                            {
+                                Console.WriteLine("caphcha hidden and viga is null");
+                            }
+                            else
+                            if (vigaError.InnerHtml.Contains("otsas"))
+                            {
+                                Console.WriteLine(vigaError.InnerHtml.Substring(47, (vigaError.InnerHtml.Length - 63)));
+                                Globals.kasClickida = 0;
+                                System.Media.SystemSounds.Asterisk.Play();
+                                watch.Stop();
+                                Globals.otsas = vigaError.InnerHtml.Substring(47, (vigaError.InnerHtml.Length - 63));
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("caphcha hidden and viga is OK");
+                            }
+                        }
+                        else //(!captcha.GetAttribute("style").Contains("display: none"))
+                        {
+                            Console.WriteLine("captcha detected");
+                            Globals.kasClickida = 0;
+                            System.Media.SystemSounds.Asterisk.Play();
+                            watch.Stop();
+                            break;
+                        }
+                    }
+                    label11.Text = watch.Elapsed.TotalSeconds.ToString() + "s";
+                    if (double.Parse(watch.Elapsed.TotalSeconds.ToString()) > double.Parse(Globals.rekordAeg))
+                    {
+                        Globals.rekordAeg = watch.Elapsed.TotalSeconds.ToString();
+                        label13.Text = Globals.rekordAeg + "s";
+                    }
+                    Gecko.GeckoElement btn = (Gecko.GeckoElement)geckoWebBrowser1.DomDocument.GetElementsByClassName("nupuke420")[0];
+                    Gecko.GeckoHtmlElement button = (Gecko.GeckoHtmlElement)btn;
+                    button.Click();
+                    Globals.klikkideCount++;
+                    if (Globals.rekordKlikke < Globals.klikkideCount)
+                    {
+                        Globals.rekordKlikke = Globals.klikkideCount;
+                        label10.Text = "Rekord: " + Globals.klikkideCount;
+                    }
+                    label9.Text = "Edukaid klikke järjest: " + Globals.klikkideCount;
+                    await PutTaskDelay();
+                    getStats();
                 }
-                else //(!captcha.GetAttribute("style").Contains("display: none"))
+                while (Globals.kasClickida == 1);
+
+                if (Globals.otsas != "")
                 {
-                    Console.WriteLine("captcha detected");
-                    Globals.kasClickida = 0;
-                    System.Media.SystemSounds.Asterisk.Play();
-                    watch.Stop();
-                    return false;
+                    buyMaterials(Globals.otsas);
                 }
+                jarjest = true;
+                Console.WriteLine(Globals.kasClickida + " " + jarjest.ToString());
             }
-            /* igaks juhuks saved
-                }
-                Console.WriteLine("captcha detected");
+            
+            while (Globals.kasClickida == 1) ;
+        }
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            //Stopwatch stopper = new Stopwatch();
+            watch.Reset();
+            watch.Start();
+            Globals.kasClickida = 1;
+            make(false);
+        }
+        private async void continuation(string Material)
+        {
+            
+            if (Material == "Plastikutükid" || Material == "Rauatükid" || Material == "Vasetükid" || Material == "Tinatükid" || Material == "Värvitopsid" || Material == "Titaanitükid" || Material == "Savitükid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=house&tegevus=ovens");
+                await Task.Delay(1500);
+                Globals.kasClickida = 1;
+            }
+            else if(Material == "Puidutükid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=house&tegevus=desk");
+                await Task.Delay(1500);
+                Globals.kasClickida = 1;
+            }
+            else if (Material == "Riiderullid" || Material == "Niidirullid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=house&tegevus=chair");
+                await Task.Delay(1500);
+                Globals.kasClickida = 1;
+            }
+            else
+            {
                 Globals.kasClickida = 0;
-                System.Media.SystemSounds.Asterisk.Play();
-                MessageBox.Show(vigaSisu. + "FIX IT");
-                return false;*/
+            }
+        }
+
+        private async void buyMaterials(string Material)
+        {
+            do
+            {     
+            await Task.Delay(1500);
+            if(Material == "Nahatükid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=slumm&paik=4&lett=2&ese=1#x");
+                await Task.Delay(1500);
+            }
+            else if (Material == "Niidirullid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=slumm&paik=4&lett=2&ese=2#x");
+                await Task.Delay(1500);
+            }
+            else if(Material == "Puidutükid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=slumm&paik=4&lett=2&ese=3#x");
+                await Task.Delay(1500);
+            }
+            else if(Material == "Tinatükid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=slumm&paik=4&lett=2&ese=4#x");
+                await Task.Delay(1500);
+            }
+            else if(Material == "Rauatükid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=slumm&paik=4&lett=2&ese=5#x");
+                await Task.Delay(1500);
+            }
+            else if (Material == "Riiderullid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=slumm&paik=4&lett=2&ese=6#x");
+                await Task.Delay(1500);
+            }
+            else if(Material == "Vasetükid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=slumm&paik=4&lett=2&ese=7#x");
+                await Task.Delay(1500);
+            }
+            else if(Material == "Värvitopsid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=slumm&paik=4&lett=2&ese=8#x");
+                await Task.Delay(1500);
+            }
+            else if(Material == "Savitükid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=slumm&paik=4&lett=2&ese=9#x");
+                await Task.Delay(1500);
+            }
+            else if(Material == "Plastikutükid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=slumm&paik=4&lett=2&ese=10#x");
+                await Task.Delay(1500);
+            }
+            else if(Material == "Titaanitükid")
+            {
+                geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=slumm&paik=4&lett=2&ese=11#x");
+                await Task.Delay(1500);
+            }
+            Gecko.GeckoHtmlElement osta = (Gecko.GeckoHtmlElement)geckoWebBrowser1.Document.GetElementsByName("purchcrafitem")[0];
+            osta.Click();
+            await Task.Delay(1500);
+            geckoWebBrowser1.Navigate("http://valge.crime.ee/index.php?asukoht=house&tegevus=materialsstorage");
+            await Task.Delay(3800);
+            Gecko.GeckoHtmlElement tosta = geckoWebBrowser1.Document.GetElementsByName("ktookappi")[0];
+            tosta.Click();
+            await Task.Delay(500);
+            Globals.ostetud++;
+            }
+            while (Globals.ostetud < 6);
+            Globals.ostetud = 0;
+            Globals.otsas = "";
+            continuation(Material);
         }
         public void getStats()
         {
