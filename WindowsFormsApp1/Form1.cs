@@ -18,9 +18,125 @@ namespace WindowsFormsApp1
         public async Task PutTaskDelay()
         {
             Random rnd = new Random();
-            int delay = rnd.Next(204, 230);
+            int delay = rnd.Next(220,230);
             await Task.Delay(delay);
         }
+        Dictionary<int, string> jook = new Dictionary<int, string>()
+        {
+            {1, "http://valge.crime.ee/index.php?asukoht=tavern#kitchen" },
+            {2,"http://valge.crime.ee/index.php?asukoht=tavern#cellar" },
+            {3,"http://valge.crime.ee/index.php?asukoht=tavern#aerator" },
+            {4,"http://valge.crime.ee/index.php?asukoht=tavern#distiller" },
+            {5,"http://valge.crime.ee/index.php?asukoht=tavern#cider" },
+            {6,"http://valge.crime.ee/index.php?asukoht=tavern#blender" }
+        };
+        Dictionary<int, int> kusjook = new Dictionary<int, int>()
+        {
+{1,1},
+{2,2},
+{3,3},
+{4,4},
+{5,2},
+{6,4},
+{7,1},
+{8,5},
+{9,1},
+{10,2},
+{11,1},
+{12,4},
+{13,1},
+{14,2},
+{15,6},
+{16,5},
+{17,1},
+{18,4},
+{19,6},
+{20,2},
+{21,6},
+{22,5},
+{23,1},
+{24,2},
+{25,3},
+{26,4},
+{27,1},
+{28,2},
+{29,6},
+{30,2},
+{31,6},
+{32,2},
+{33,1},
+{34,2},
+{35,6},
+{36,4},
+{37,6},
+{38,5},
+{39,3},
+{40,2},
+{41,1},
+{42,4},
+{43,6},
+{44,4},
+{45,3},
+{46,5},
+{47,6},
+{48,4},
+{49,1},
+{50,4},
+{51,6},
+{52,5},
+{53,1},
+{54,2},
+{55,6},
+{56,4},
+{57,6},
+{58,4},
+{59,3},
+{60,4},
+{61,6},
+{62,4},
+{63,3},
+{64,4},
+{65,6},
+{66,4},
+{67,3},
+{68,4},
+{69,3},
+{70,2},
+{71,3},
+{72,2},
+{73,6},
+{74,4},
+{75,6},
+{76,2},
+{77,3},
+{78,2},
+{79,6},
+{80,4},
+{81,6},
+{82,2},
+{83,3},
+{84,2},
+{85,3},
+{86,4},
+{87,6},
+{88,2},
+{89,3},
+{90,4},
+{91,6},
+{92,2},
+{93,3},
+{94,2},
+{95,6},
+{96,2},
+{97,3},
+{98,2},
+{99,6},
+{100,3},
+{101,3},
+{102,3},
+{105,2},
+{110,2}
+            };
         Dictionary<string, string> mahlad = new Dictionary<string, string>()
         {
             {"Apelsinimahl","Apelsinid" },
@@ -38,46 +154,66 @@ namespace WindowsFormsApp1
             {"Sidrunimahl","Sidrunid" },
             {"Vaarikamahl","Vaarikad" },
             {"Tikrimahl","Tikrid" },
-            {"Tume viinamarjamahl","Tumedad viinamarjad" },
+            {"Tume viinamarjamahl","Tumedad viinamarjad" }
+
+        };
+        Dictionary<string, int> mahlapress = new Dictionary<string, int>()
+        {
+            {"Apelsinimahl",1 },
+            {"Greibimahl",2 },
+            {"Hele viinamarjamahl",3 },
+             {"Jõhvikamahl",4 },
+             {"Kirsimahl",5 },
+             {"Maasikamahl",6 },
+            {"Mustsõstramahl",7 },
+             {"Pirnimahl",8 },
+             {"Ploomimahl",9 },
+            {"Pohlamahl",10 },
+            {"Punasõstramahl",11 },
+            {"Sidrunimahl",12 },
+            {"Tikrimahl",13 },
+            {"Tume viinamarjamahl",14 },
+            {"Vaarikamahl",15 },
+            {"Õunamahl",16 }
 
         };
         Dictionary<string, int> tellimine = new Dictionary<string, int>() {
-            {"Apelsinid", 9},
-            {"Greibid", 11},
-            {"Heledad viinamarjad", 15},
-            {"Jõhvikad", 12},
-            {"Kadakamarjad", 17},
-            {"Karamell", 32},
-            {"Kirsid", 4},
-            {"Kohvioad", 31},
-            {"Kokalehed", 18},
-            {"Kummel", 22},
-            {"Maasikad", 6},
-            {"Mais", 27},
-            {"Mesi", 33},
+            {"Apelsinid", 1},
+            {"Greibid", 2},
+            {"Heledad viinamarjad", 3},
+            {"Jõhvikad", 4},
+            {"Kadakamarjad", 5},
+            {"Karamell", 6},
+            {"Kirsid", 7},
+            {"Kohvioad", 8},
+            {"Kokalehed", 9},
+            {"Kummel", 10},
+            {"Maasikad",11},
+            {"Mais", 12},
+            {"Mesi", 13},
             {"Mustsõstrad", 14},
-            {"Nisu", 24},
-            {"Nõges", 23},
-            {"Oder", 25},
-            {"Pipar", 28},
-            {"Pirnid", 2},
-            {"Ploomid", 3},
-            {"Pohlad", 8},
-            {"Punasõstrad", 13},
-            {"Pärm", 34},
-            {"Rukis", 26},
-            {"Sidrunid", 10},
-            {"Sinine agaav", 21},
-            {"Suhkur", 35},
-            {"Teepuulehed", 19},
-            {"Teepuuõied", 20},
-            {"Tikrid", 7},
-            {"Toorpiim", 30},
-            {"Tumedad viinamarjad", 16},
-            {"Vaarikad", 5},
-            {"Vanilje", 36},
-            {"Vesi", 29},
-            {"Õunad", 1}
+            {"Nisu", 15},
+            {"Nõges", 16},
+            {"Oder", 17},
+            {"Pipar", 18},
+            {"Pirnid", 19},
+            {"Ploomid", 20},
+            {"Pohlad", 21},
+            {"Punasõstrad", 22},
+            {"Pärm", 23},
+            {"Rukis", 24},
+            {"Sidrunid", 25},
+            {"Sinine agaav", 26},
+            {"Suhkur", 27},
+            {"Teepuulehed", 28},
+            {"Teepuuõied", 29},
+            {"Tikrid", 30},
+            {"Toorpiim", 31},
+            {"Tumedad viinamarjad", 32},
+            {"Vaarikad", 33},
+            {"Vanilje", 34},
+            {"Vesi", 35},
+            {"Õunad", 36}
         };
         public int getDict(string vaartus)
         {
@@ -95,6 +231,42 @@ namespace WindowsFormsApp1
         {
             string tulemus = "";
             if (mahlad.TryGetValue(vaartus, out tulemus))
+            {
+                return tulemus;
+            }
+            else
+            {
+                return "";
+            }
+        }
+        public int getDict3(string vaartus)
+        {
+            int tulemus = 0;
+            if (mahlapress.TryGetValue(vaartus, out tulemus))
+            {
+                return tulemus;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        public int getDict4(int vaartus)
+        {
+            int tulemus = 0;
+            if (kusjook.TryGetValue(vaartus, out tulemus))
+            {
+                return tulemus;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        public string getDict5(int vaartus)
+        {
+            string tulemus = "";
+            if (jook.TryGetValue(vaartus, out tulemus))
             {
                 return tulemus;
             }
@@ -130,6 +302,7 @@ namespace WindowsFormsApp1
             public static string rekordAeg = "0";
             public static int klikkideCount = 0;
             public static string otsas = "";
+            public static int kaptcha = 0;
 
 
         }
@@ -204,6 +377,7 @@ namespace WindowsFormsApp1
         public async Task makeController()
         {
             label9.Text = "Edukaid klikke järjest: 0";
+            Globals.kaptcha = 0;
             Globals.klikkideCount = 0;
             do
             {
@@ -229,9 +403,75 @@ namespace WindowsFormsApp1
                     bool action = await (make());
                     if (!action && Globals.otsas != "")
                     {
-                        Console.WriteLine("tried to get more stuff");
-                        await buyMaterials(Globals.otsas);
+                        if(listBox1.GetItemText(listBox1.SelectedItem) == "JOOGIMEISTER")
+                        {
+                            int hetkelevel = int.Parse(label5.Text);
+                            if ( getDict4(hetkelevel) == 4)
+                            {
+                                Console.WriteLine("tried to get more stuff");
+                                
+                                await buyMaterials(Globals.otsas);
+                                if(Globals.kaptcha !=0)
+                                {
+                                    break;
+                                }
+                            }
+                            else if(getDict5(getDict4(hetkelevel)) == geckoWebBrowser1.Url.ToString().Replace("world2","valge")){
+                                Console.WriteLine("tried to get more stuff & olen õiges kohas");
+                                if (action)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    if(Globals.kaptcha != 0)
+                                    {
+                                        return;
+                                    
+                                    }
+                                    else
+                                    {
+                                        await buyMaterials(Globals.otsas);
+                                    }
+                                    
+                                }
+                                
+                            }
+                            else
+                            {
+                                Console.WriteLine(getDict5(getDict4(hetkelevel)));
+                                Console.WriteLine(geckoWebBrowser1.Url.ToString());
+                                var kusjook = getDict4(hetkelevel);
+                                await navwaitLoad(getDict5(kusjook));
+                                Console.WriteLine(kusjook);
+                                Console.WriteLine(hetkelevel);
+                                Globals.kasClickida = 1;
+                                int indexfinder = 0;
+                                Gecko.GeckoNodeCollection drinks_list = geckoWebBrowser1.DomDocument.GetElementById("drinks_list").ChildNodes;
+                                foreach (Gecko.GeckoNode drink in drinks_list)
+                                {
+                                    indexfinder++;
+                                    if (drink.TextContent.Contains(hetkelevel.ToString()))
+                                    {
+                                        break;
+                                    }
 
+                                }
+                                Console.WriteLine(indexfinder);
+                                do
+                                {
+                                    await Task.Delay(20);
+                                }
+                                while ((Gecko.DOM.GeckoSelectElement)geckoWebBrowser1.Document.GetElementById("drinks_list")==null);
+                                var selectElement2 = (Gecko.DOM.GeckoSelectElement)geckoWebBrowser1.Document.GetElementById("drinks_list");
+                                selectElement2.SelectedIndex = indexfinder / 2 - 1;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("tried to get more stuff");
+                            await buyMaterials(Globals.otsas);
+                        }
                     }
                     else
                     {
@@ -248,7 +488,11 @@ namespace WindowsFormsApp1
         private async Task<bool> make()
         {
 
-
+            do
+            {
+                await Task.Delay(10);
+            }
+            while ((Gecko.GeckoElement)geckoWebBrowser1.DomDocument.GetElementsByClassName("nupuke420")[0] == null);
             if ((Gecko.GeckoElement)geckoWebBrowser1.DomDocument.GetElementsByClassName("nupuke420")[0] != null)
             {
                 Gecko.GeckoElement btn = (Gecko.GeckoElement)geckoWebBrowser1.DomDocument.GetElementsByClassName("nupuke420")[0];
@@ -266,7 +510,6 @@ namespace WindowsFormsApp1
                     Gecko.GeckoNodeCollection noticed = (Gecko.GeckoNodeCollection)geckoWebBrowser1.DomDocument.GetElementsByClassName("message notice");
                     Gecko.GeckoHtmlElement possibleLevelup = null;
                     int noticeCount = 0;
-                    Console.WriteLine((Gecko.GeckoNodeCollection)geckoWebBrowser1.DomDocument.GetElementsByClassName("message notice"));
                     foreach (Gecko.GeckoNode notice in noticed)
                     {
                         noticeCount++;
@@ -288,12 +531,13 @@ namespace WindowsFormsApp1
                 if (captcha != null && !captcha.GetAttribute("style").Contains("display: none"))
 
                 {
-
+                    Globals.kaptcha = 1;
                     Console.WriteLine("captcha detected");
                     Globals.kasClickida = 0;
                     System.Media.SystemSounds.Asterisk.Play();
                     watch.Stop();
                     return false;
+                    
                 }
 
                 else
@@ -340,7 +584,6 @@ namespace WindowsFormsApp1
                             {
                                 Console.WriteLine(vigaError.InnerHtml.Substring(47, (vigaError.InnerHtml.Length - 63)));
                                 Globals.kasClickida = 0;
-                                System.Media.SystemSounds.Asterisk.Play();
                                 watch.Stop();
                                 Console.WriteLine("material otsas");
                                 Globals.otsas = vigaError.InnerHtml.Substring(47, (vigaError.InnerHtml.Length - 63));
@@ -378,7 +621,7 @@ namespace WindowsFormsApp1
         }
         private async Task errorPage()
         {
-            await Task.Delay(50);
+            await Task.Delay(20);
             if (geckoWebBrowser1.Text.Contains("OOTA 1 SEKUND ENNE LEHE REFRESHIMIST!!!"))
             {
                 Console.WriteLine("Found the fucking error");
@@ -386,7 +629,7 @@ namespace WindowsFormsApp1
                 await Task.Delay(50);
                 do
                 {
-                    await Task.Delay(100);
+                    await Task.Delay(10);
                 }
                 while (geckoWebBrowser1.IsBusy || geckoWebBrowser1.IsAjaxBusy);
 
@@ -394,25 +637,25 @@ namespace WindowsFormsApp1
         }
         private async Task navwaitLoad(string URL)
         {
+            await errorPage();
             do
             {
                 await Task.Delay(100);
+                await errorPage();
             }
             while (geckoWebBrowser1.IsBusy || geckoWebBrowser1.IsAjaxBusy);
-            Console.WriteLine(geckoWebBrowser1.Url);
             if (geckoWebBrowser1.Url.ToString().Contains("world2"))
             {
-                Console.WriteLine(geckoWebBrowser1.Url);
                 URL = URL.Replace("valge", "world2");
-                Console.WriteLine(URL);
             }
             geckoWebBrowser1.Navigate(URL);
             await errorPage();
             do
             {
-                await Task.Delay(200);
+                await Task.Delay(100);
             }
             while (geckoWebBrowser1.IsBusy || geckoWebBrowser1.IsAjaxBusy);
+            await errorPage();
         }
         private async Task continuation(string Material)
         {
@@ -499,13 +742,65 @@ namespace WindowsFormsApp1
             }
             else if (getDict(Material) != 0)
             {
+                var whereURL = geckoWebBrowser1.Url;
                 await navwaitLoad("http://valge.crime.ee/index.php?asukoht=tavern#phone");
+                do
+                {
+                    await Task.Delay(20);
+                }
+                while (geckoWebBrowser1.Document.GetElementById("mat")==null);
+                Gecko.GeckoElement chooser = geckoWebBrowser1.Document.GetElementById("mat");
+                Gecko.GeckoElement quantity = geckoWebBrowser1.Document.GetElementById("quant");
+                Gecko.GeckoHtmlElement ostaBtn = geckoWebBrowser1.Document.GetElementsByName("order_mat")[0];
+                var document = geckoWebBrowser1.Document;
+                var selectElement = (Gecko.DOM.GeckoSelectElement)document.GetElementById("mat");
+                selectElement.SelectedIndex = getDict(Material);
+                Console.WriteLine(getDict(Material));
+                quantity.SetAttribute("value", "100");
+                ostaBtn.Click();
+                await navwaitLoad(whereURL.ToString());
+                await Task.Delay(50);
+                Globals.kasClickida = 1;
+                Console.WriteLine("going to " + whereURL.ToString());
+                return;
+            }
+            else if (Material.ToString().Contains("mahl"))
+            {
+                var whereURL = geckoWebBrowser1.Url;
+                await navwaitLoad("http://valge.crime.ee/index.php?asukoht=tavern#phone");
+                do
+                {
+                    await Task.Delay(20);
+                }
+                while (geckoWebBrowser1.Document.GetElementById("quant") == null);
+                Gecko.GeckoElement quantity = geckoWebBrowser1.Document.GetElementById("quant");
+                Gecko.GeckoHtmlElement ostaBtn = geckoWebBrowser1.Document.GetElementsByName("order_mat")[0];
+                var document = geckoWebBrowser1.Document;
+                var selectElement = (Gecko.DOM.GeckoSelectElement)document.GetElementById("mat");
+                selectElement.SelectedIndex = getDict(getDict2(Material));
+                quantity.SetAttribute("value", "100");
+                ostaBtn.Click();
+                await navwaitLoad("http://valge.crime.ee/index.php?asukoht=tavern#juicer");
+                do
+                {
+                    await Task.Delay(20);
+                }
+                while (geckoWebBrowser1.Document.GetElementById("mpress_a") == null);
+                Gecko.GeckoElement quantity2 = geckoWebBrowser1.Document.GetElementById("mpress_a");
+                Gecko.GeckoHtmlElement makeBtn = geckoWebBrowser1.Document.GetElementsByName("make_juice")[0];
+                var selectElement2 = (Gecko.DOM.GeckoSelectElement)document.GetElementById("mpress_n");
+                selectElement2.SelectedIndex = getDict3(Material);
+                quantity2.SetAttribute("value", "100");
+                makeBtn.Click();
+                await navwaitLoad(whereURL.ToString());
+                await Task.Delay(50);
+                Globals.kasClickida = 1;
+                Console.WriteLine("going to " + whereURL.ToString());
                 return;
             }
             else
             {
-                Console.WriteLine("õiges kohas raisk + " + Material);
-                return;
+                Console.WriteLine("sum ting wong");
             }
             Console.WriteLine(Globals.kasClickida);
 
@@ -518,6 +813,7 @@ namespace WindowsFormsApp1
             await continuation(Material);
             return;
         }
+
         public void getStats()
         {
             label11.Text = watch.Elapsed.TotalSeconds.ToString() + "s";
